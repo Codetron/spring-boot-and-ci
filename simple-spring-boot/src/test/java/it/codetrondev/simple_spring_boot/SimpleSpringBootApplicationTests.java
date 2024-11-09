@@ -16,7 +16,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 @WebMvcTest()
 class SimpleSpringBootApplicationTests {
 
-	@Value("app.controller.get.message")
+	@Value("${app.controller.get.message}")
 	private String helloMessage;
 
 	@Autowired

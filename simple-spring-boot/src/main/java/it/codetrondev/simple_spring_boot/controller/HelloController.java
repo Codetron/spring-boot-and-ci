@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/")
 public class HelloController {
 
-    @Value("app.controller.get.message")
+    @Value("${app.controller.get.message}")
     private String helloMessage;
     @GetMapping(value = "hello-world", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> helloWorld() {
