@@ -1,7 +1,6 @@
 package it.codetrondev.simple_spring_boot.controller;
 
 
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
