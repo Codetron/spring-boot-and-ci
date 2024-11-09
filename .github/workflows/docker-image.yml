@@ -17,4 +17,4 @@ jobs:
     - name: Build the Docker image
       run: | 
         cd "$(git rev-parse --show-toplevel)"
-        docker build . --file simple-spring-boot/Dockerfile --tag codetron/simple-spring-boot-ci:$(date +%s)docker build . --file ../simple-spring-boot/Dockerfile --tag codetron/simple-spring-boot-ci:$(date +%s)
+        docker build . --file simple-spring-boot/Dockerfile --tag codetron/simple-spring-boot-ci:$(date +%s)
