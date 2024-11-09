@@ -15,4 +15,4 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag codetron/simple-spring-boot-ci:$(date +%s)
+      run: docker build . --file ../simple-spring-boot/Dockerfile --tag codetron/simple-spring-boot-ci:$(date +%s)
