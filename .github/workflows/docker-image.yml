@@ -20,11 +20,20 @@ jobs:
           java-version: '21'
           distribution: 'temurin'
 
+      # Execute test
+      - name: Run tests with Maven
+        run: mvn test -f simple-spring-boot/pom.xml
+
       # Step 2: Extract version from pom.xml
       - name: Extract version from pom.xml
         id: extract_version
         run: |
-          VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout | tr -d '\r')
+          VERSION=$(mvn -f simple-spring-boot/pom.xml help:evaluate -Dexpression=project.version -q -DforceStdout | tr -d '\r')
+          echo "Extracted VERSION: '$VERSION'"
+          if [[ -z "$VERSION" ]]; then
+            echo "Version extraction failed"
+            exit 1
+          fi
           echo "VERSION=${VERSION}" >> $GITHUB_ENV
 
       # Step 3: Determine the tag based on the branch or PR
