@@ -3,6 +3,7 @@ pipeline {
 
     tools {
         jdk 'JDK-21'
+        maven 'Maven-3.9.9'
     }
 
     stages {
@@ -16,7 +17,7 @@ pipeline {
             steps {
                 echo 'Testing..'
                 dir('simple-spring-boot') {
-                    sh 'mvn package'
+                    mvn package
                 }
             }
         }
