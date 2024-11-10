@@ -5,7 +5,10 @@ pipeline {
         stage('checkout SCM') {
             steps {
                 echo 'Checking out..'
-                checkout scmGit(branches: [[name: 'develop']], extensions: [], userRemoteConfigs: [[credentialsId: 'git_account_token', url: 'https://github.com/Codetron/spring-boot-and-ci.git']])
+                checkout scmGit(
+                    extensions: [],
+                    userRemoteConfigs: [[credentialsId: 'git_account_token', url: 'https://github.com/Codetron/spring-boot-and-ci.git']]
+                )
             }
         }
         stage('Build') {
