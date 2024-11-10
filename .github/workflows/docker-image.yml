@@ -20,20 +20,29 @@ jobs:
           java-version: '21'
           distribution: 'temurin'
 
-      # Step 2: Define image tag
-      - name: Define image tag
-        id: define_tag
-        run: echo "TAG=$(date +%s)" >> $GITHUB_ENV
+      # Step 2: Extract version from pom.xml
+      - name: Extract version from pom.xml
+        id: extract_version
+        run: |
+          VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout | tr -d '\r')
+          echo "VERSION=${VERSION}" >> $GITHUB_ENV
 
-      # Step 3: Build Docker image
+      # Step 3: Determine the tag based on the branch or PR
+      - name: Set Docker tag
+        id: set_tag
+        run: |
+          BRANCH_NAME=${GITHUB_REF#refs/heads/}
+          if [[ $GITHUB_EVENT_NAME == "pull_request" ]]; then
+            TAG="${{ env.VERSION }}-pr-${{ github.event.pull_request.number }}"
+          else
+            TAG="${{ env.VERSION }}-${BRANCH_NAME}"
+          fi
+          echo "TAG=${TAG}" >> $GITHUB_ENV
+
+      # Step 4: Build Docker image
       - name: Build Docker image
         run: |
-          cd "$(git rev-parse --show-toplevel)"
           docker build -f simple-spring-boot/Dockerfile -t codetron/simple-spring-boot-ci:${{ env.TAG }} simple-spring-boot
-
-      # Step 4: List Docker images (to verify if the image exists)
-      - name: List Docker images
-        run: docker images
 
       # Step 5: Log in to Docker Hub
       - name: Log in to Docker Hub
